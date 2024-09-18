@@ -72,5 +72,35 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+    function updatePosition() {
+        const scrollAmount = window.scrollY * 0.0001;
+        document.querySelectorAll(".item").forEach(function(item, index) {
+            const angle = index * angleIncrement + scrollAmount;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+            const rotation = (angle * 180) / Math.PI;
+
+
+
+            gsap.to(item, {
+                duration: 0.05,
+                x: x + "px",
+                y: y + "px",
+                rotation: rotation,
+                ease: "elastic.out(1, 0.3)",
+            });
+        });
+    }
+    updatePosition();
+    document.addEventListener("scroll", updatePosition);
+
+    document.addEventListener("mousemove", function(e){
+        gsap.to(cursor, {
+            x: e.clientX - 150,
+            y: e.clientY - 200,
+            duration: 1,
+            ease: "power3.out",
+        })
+    })
 });
 
